@@ -1,0 +1,27 @@
+
+
+.toolbar-spacer1 {
+    flex: 1 1 auto;
+} 
+.toolbar-row {
+    display:flex;
+    flex-direction: row;
+    align-items: center; 
+    flex: .0125 1 auto;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 600;
+    font-size: calc(1.2 * 16px);
+
+} 
+
+
+.my-icon {
+    padding-right: 3px;
+    margin-bottom: .5px;
+    font-size: 22px;
+}
+
+.font-size3 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: calc(0.5 * 16px);
+}
