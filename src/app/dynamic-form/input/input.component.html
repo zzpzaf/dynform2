@@ -1,0 +1,13 @@
+
+<mat-form-field >
+    <div [formGroup]="fGroup">
+          <mat-label >
+            {{ field.fieldLabel }}:
+          </mat-label>
+          <input matInput  
+            [formControlName]="field.controlName"
+            [id]="field.controlName"
+            [type]="field.inputType ?? ''"
+          />
+    </div>
+</mat-form-field>

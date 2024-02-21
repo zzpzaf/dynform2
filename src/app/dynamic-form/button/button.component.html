@@ -1,0 +1,14 @@
+
+<mat-card-footer>
+    <div [formGroup]="fGroup">
+        <p></p>
+        <button mat-raised-button color="accent"
+        ngDefaultControl
+        [formControlName]="field.controlName"
+        [id]="field.controlName"
+        [type]="field.inputType"
+        >
+        {{ field.fieldLabel }}
+        </button>
+    </div>
+</mat-card-footer>

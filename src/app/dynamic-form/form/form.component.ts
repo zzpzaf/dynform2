@@ -6,11 +6,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
+import { IFormField } from '../../dataObjects/IFormField';
+import { ItemsFormFields } from '../../dataObjects/itemFormFields';
+import { ApplyFormControlDirective } from '../apply-form-control.directive';
 
 
 
 @Component({
-  selector: 'app-form1',
+  selector: 'app-form',
   standalone: true,
   imports: [
     RouterOutlet,
@@ -20,23 +23,19 @@ import { RouterOutlet } from '@angular/router';
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
+    ApplyFormControlDirective,
   ],
-  templateUrl: './form1.component.html',
-  styleUrl: './form1.component.scss'
+  templateUrl: './form.component.html',
+  styleUrl: './form.component.scss'
 })
-export class Form1Component {
+export class FormComponent {
 
-  fornCardTitle: string = 'My Demo Form';
-  demoFormGroup!: FormGroup;
-
-  input1Label: string = 'Input some text';
-  input1Placeholder: string = 'Type some text here';
-  input1ControlNane: string = 'input1';
-
-  submitButtomText: string = 'Submit';
+  fornCardTitle: string = 'Dynamic Form with Dynamic Components';
+  dynFormGroup!: FormGroup;
 
   constructor( private formBuilder: FormBuilder ) { }
 
+  public formFields: IFormField[] = ItemsFormFields;
   
   ngOnInit(): void {
     this.initializeForm();
@@ -45,14 +44,22 @@ export class Form1Component {
   initializeForm(): void {
     const fbGroup = this.formBuilder.group({});
 
-    fbGroup.addControl(this.input1ControlNane, new FormControl(""));
-    // Add more controls here
+    this.formFields.forEach((field) => {
+      fbGroup.addControl(
+        field.controlName,
+        new FormControl(
+          field.initialValue !== undefined && field.initialValue !== null
+            ? field.initialValue
+            : ''
+        )
+      );
+    });
 
-    this.demoFormGroup = fbGroup;
+    this.dynFormGroup = fbGroup;
   }
 
   onFormSubmit(event: Event): void {
-    console.log('Form Submitted', this.demoFormGroup.value);
+    console.log('Form Submitted', this.dynFormGroup.value);
   }
 
 

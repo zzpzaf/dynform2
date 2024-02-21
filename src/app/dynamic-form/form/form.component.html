@@ -1,0 +1,20 @@
+<mat-card class="mat-card">
+
+  <mat-card-content>
+    <mat-toolbar class="mat-card-title" color="primary">
+      {{ fornCardTitle }}
+    </mat-toolbar>
+
+    <form [formGroup]="dynFormGroup" (ngSubmit)="onFormSubmit($event)">
+      @for (field of formFields; track $index) {
+      <ng-container
+        applyFormControl
+        [formField]="field"
+        [formGroup]="dynFormGroup"
+      >
+      </ng-container>
+      }
+    </form>
+  </mat-card-content>
+  
+</mat-card>
