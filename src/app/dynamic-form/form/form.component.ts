@@ -97,4 +97,13 @@ export class FormComponent {
   }
 
 
+  ngOnDestroy() {
+    this.unSubscribe();
+  }
+
+  unSubscribe() {
+    if (!!this.item$)
+      this.item$.unsubscribe();
+  }
+
 }
