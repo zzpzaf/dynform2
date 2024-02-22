@@ -8,4 +8,5 @@ export interface IFormField {
   fieldLabel: string;
   inputType?: string;
   initialValue?: any | any[];
+  readOnly?: boolean;
 }

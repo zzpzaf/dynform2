@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 // import { HomeComponent } from "./home/home.component";
-import { FormComponent } from "./dynamic-form/form/form.component";
+// import { FormComponent } from "./dynamic-form/form/form.component";
+import { RequestDataComponent } from './request-data/request-data.component';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { FormComponent } from "./dynamic-form/form/form.component";
   imports: [
     RouterOutlet,
     // HomeComponent,
-    FormComponent
+    RequestDataComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

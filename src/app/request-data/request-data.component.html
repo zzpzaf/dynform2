@@ -1,0 +1,11 @@
+<div class="backcolor">
+    <!-- <form [formGroup]="demoFormGroup" (ngSubmit)="onFormSubmit($event)" class="q1container"> -->
+    <form [formGroup]="requestFormGroup"  class="q1container">
+        {{input1Label}}:
+        <input type="number" min="1" matInput placeholder={{input1Placeholder}} formControlName={{input1ControlNane}} >
+        <!-- <button mat-raised-button type="submit" color="accent" > {{submitButtomText}} </button> -->
+    </form>
+    <hr />
+</div>
+
+<dyn-form></dyn-form>

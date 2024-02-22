@@ -1,0 +1,16 @@
+.backcolor {
+    background-color:lightskyblue; 
+  }
+  
+  .q1container {
+      
+    // margin-top: 10px;
+    padding-top: 8px;
+    display: flex; /* or inline-flex */
+    flex-direction: row;
+    justify-content: center;   /* horizontally */
+    align-items: center;   /* verically */
+    gap: 50px;   /* only between items */
+  
+  
+  }

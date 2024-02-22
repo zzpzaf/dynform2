@@ -12,19 +12,27 @@ export const dynComponents: { [key: string]: Type<any> } = {
 
 export const ItemsFormFields: IFormField[] = [
 
-        {
-          dataField: 'itemName',
-          controlType: 'input',
-          controlName: 'itemName',
-          fieldLabel: 'Item Name',
-          inputType: 'text',
-        },
-        {
-          controlType: 'button',
-          controlName: 'submitButton',
-          fieldLabel: 'Submit',
-          inputType: 'submit',
-        },
+  {
+    dataField: 'itemId',
+    controlType: 'input',
+    controlName: 'itemId',
+    fieldLabel: 'Item Id',
+    inputType: 'number',
+    readOnly: true,
+  },
+  {
+    dataField: 'itemName',
+    controlType: 'input',
+    controlName: 'itemName',
+    fieldLabel: 'Item Name',
+    inputType: 'text',
+  },
+  {
+    controlType: 'button',
+    controlName: 'submitButton',
+    fieldLabel: 'Submit',
+    inputType: 'submit',
+  },
       
       
 ]
