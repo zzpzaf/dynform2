@@ -1,4 +1,4 @@
-import { Component, inject, } from '@angular/core';
+import { Component, effect, inject, } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,9 +11,6 @@ import { ItemsFormFields } from '../../dataObjects/itemFormFields';
 import { ApplyFormControlDirective } from '../apply-form-control.directive';
 import { ItemFormFieldsService } from '../../services/item-form-fields.service';
 import { IItem } from '../../dataObjects/iitem';
-import { Subscription } from 'rxjs';
-
-
 
 @Component({
   selector: 'dyn-form',
@@ -34,30 +31,23 @@ import { Subscription } from 'rxjs';
 })
 export class FormComponent {
 
-  constructor( private formBuilder: FormBuilder ) { }
+  constructor( private formBuilder: FormBuilder ) { 
+    effect(()=> {
+      this.item = this.itemService.$item()!;     
+      this.setFormControlValues();
+    });
+  }
  
   public formFields: IFormField[] = ItemsFormFields;
   public fornCardTitle: string = 'Dynamic Form with Dynamic Components';
   public dynFormGroup!: FormGroup;
   private itemService = inject(ItemFormFieldsService); 
-  private item$!: Subscription;
   private item!: IItem;
-
+ 
  
   
   ngOnInit(): void {
       this.initializeForm();
-
-      this.item$ = this.itemService.getItem().subscribe({
-        next: (item: IItem) => {
-         this.item = item;
-          // console.log('<===>> Item:', this.item);
-          this.setFormControlValues();
-        },
-        error: (error ) => {
-          console.log('Error:', error);
-        },
-      });
   }
 
   initializeForm(): void {
@@ -96,14 +86,5 @@ export class FormComponent {
     console.log('Form Submitted', this.dynFormGroup.value);
   }
 
-
-  ngOnDestroy() {
-    this.unSubscribe();
-  }
-
-  unSubscribe() {
-    if (!!this.item$)
-      this.item$.unsubscribe();
-  }
-
 }
+
