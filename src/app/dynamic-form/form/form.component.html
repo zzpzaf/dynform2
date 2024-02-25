@@ -13,7 +13,21 @@
         [formGroup]="dynFormGroup"
       >
       </ng-container>
+
+        <!--  -->
+        @if ((dynFormGroup.controls[field['controlName']].touched ||
+        isFormSubmitted) && dynFormGroup.controls[field['controlName']].errors) {
+          @for (validation of field.validators; track $index) {
+              @if (dynFormGroup.controls[field['controlName']].errors![validation.validatorName]) {
+                  <mat-error style="font-size: x-small; margin-top: .001px;">
+                    {{ validation.validatorErrorMessage }} 
+                  </mat-error>
+              }
+          }
+        }
+        <!--  -->
       }
+
     </form>
   </mat-card-content>
   

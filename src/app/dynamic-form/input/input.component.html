@@ -1,5 +1,5 @@
 
-<mat-form-field >
+<mat-form-field subscriptSizing='dynamic'>
     <div [formGroup]="fGroup">
           <mat-label >
             {{ field.fieldLabel }}:
@@ -8,6 +8,8 @@
             [formControlName]="field.controlName"
             [id]="field.controlName"
             [type]="field.inputType ?? ''"
+            [min]="field.minValue"
+            [max]="field.maxValue"
             [readonly]="field.readOnly"
           />
     </div>

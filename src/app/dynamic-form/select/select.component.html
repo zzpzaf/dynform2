@@ -1,0 +1,23 @@
+
+<mat-form-field subscriptSizing='dynamic'>
+    <div [formGroup]="fGroup">
+        <div class="form-field">
+            <mat-label>{{ field.fieldLabel }}</mat-label>
+            <mat-select 
+            [formControlName]="field.controlName"
+            [id]="field.controlName"
+            [multiple]="field.multipleOptions"
+            >
+            <mat-option [value]="null" disabled>{{ field["promptText"] }}</mat-option>
+            <!-- <mat-option *ngFor="let opt of field.options" [value]="opt.optionKey">
+                {{ opt.optionValue }}
+            </mat-option> -->
+            @for (opt of field.options; track $index) {
+                <mat-option [value]="opt.optionKey">
+                    {{ opt.optionValue }}
+                </mat-option>
+            }
+            </mat-select>
+        </div>
+    </div>
+</mat-form-field>

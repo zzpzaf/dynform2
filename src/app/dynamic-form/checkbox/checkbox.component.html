@@ -1,0 +1,12 @@
+
+<div [formGroup]="fGroup" class="mat-component">
+    <mat-label>
+      {{ field.fieldLabel }} 
+    </mat-label>
+    <mat-checkbox  color="primary"
+      [formControlName]="field.controlName"
+      [id]="field.controlName"
+      [checked]="field.initialValue"      
+      >
+    </mat-checkbox>
+</div>

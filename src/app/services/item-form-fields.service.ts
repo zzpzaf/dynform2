@@ -4,13 +4,12 @@ import { IItem } from '../dataObjects/iitem';
 import { ICategory } from '../dataObjects/icatecory';
 import { IFormField, IFormOptions } from '../dataObjects/IFormField';
 import { ItemsFormFields } from '../dataObjects/itemFormFields';
+import { formatDate } from '@angular/common';
 
 
-export function equalPrimitives<T>(a: T, b: T): boolean {
-  return (a === null || typeof a !== 'object') && Object.is(a, b);
-}
-
-
+// export function equalPrimitives<T>(a: T, b: T): boolean {
+//   return (a === null || typeof a !== 'object') && Object.is(a, b);
+// }
 
 @Injectable({
   providedIn: 'root'
@@ -25,18 +24,15 @@ export class ItemFormFieldsService {
       categories.forEach((category: ICategory) => {
         optionsObject.push({ key: category.categoryId, value: category.categoryName });
       });
-      // console.log('>===>> ItemFormFieldsService - optionsObject', optionsObject);
       this.setFormFieldSelectOptions('itemCategories', optionsObject);
     });
   }
 
   private itemsDataServise = inject(DataService); 
   private formFields: IFormField[] = ItemsFormFields;
-  // public $item = signal<IItem | undefined>(undefined);
-  // private formFields$$ = new BehaviorSubject<IFormField[]>(this.formFields);
-  
-  //public $formFields = signal< IFormField[]>(this.formFields);                                  // The Signal with the default equality function - object.js
-  public $formFields = signal< IFormField[]>(this.formFields, {equal: equalPrimitives});          // The Signal using custom equality function - equalPrimitives
+
+  // public $formFields = signal< IFormField[]>(this.formFields, {equal: equalPrimitives});          // The Signal using custom equality function - equalPrimitives
+  public $formFields = signal< IFormField[]>(this.formFields);                                  // The Signal with the default equality function - object.js
 
   public setItemId(itemId: number) {
     this.itemsDataServise.getItems().subscribe((items: IItem[]) => {
@@ -63,9 +59,6 @@ export class ItemFormFieldsService {
       });
     });
     ff.options = ffoptions;
-
-    // this.formFields$$.next(this.formFields);
-    // this.$formFields.update(()=>this.formFields);     // Signal update
     this.$formFields.set([...this.formFields]);     // Set Signal new value
   }
 
@@ -87,11 +80,7 @@ export class ItemFormFieldsService {
       if (!field.options) field.initialValue = item[dataField!];
       if (field.controlType === 'datetime') field.initialValue = this.dateTimeString(item[dataField]); 
     });
-    // this.formFields$$.next(this.formFields);
-    // this.$formFields.update(()=>this.formFields);     // Signal update - the effect() will not sense the changes in singke objects of the formFields 
-    // this.$formFields.update(()=>[...this.formFields]);   // Signal update using spread operator - the effect() will sense any changes in any object of the formFields
-    this.$formFields.set(this.formFields);    // Set Signal new value using spread operator
-    // console.log('>===>> 1. ItemFormFieldsService - updateFormFieldsInitialValues', this.$formFields());
+    this.$formFields.set([...this.formFields]);    // Set Signal new value using spread operator
   }
 
 
@@ -124,8 +113,9 @@ export class ItemFormFieldsService {
   }
 
   private dateTimeString(dt: Date): string {  
+    const dtStr = formatDate(dt, 'yyyy-MM-ddTHH:mm:ss.SSS', 'en-US');   // For the default native DateTime Picker
     // const dtStr = formatDate(dt, 'yyyy-MM-ddTHH:mm:ss.SSS', 'en-US')+"Z";
-    const dtStr = new Date(dt).toISOString();
+    // const dtStr = new Date(dt).toISOString();
     return dtStr;
   }
 }

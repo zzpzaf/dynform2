@@ -1,0 +1,13 @@
+
+<div [formGroup]="fGroup">
+    <p></p>
+    <div style="text-align: left;">
+      <br />
+      <label>{{ field.fieldLabel }}</label>
+      <input
+        [formControlName]="field.controlName"
+        [id]="field.controlName"
+        [type]="field.inputType"
+      />
+    </div>
+</div>

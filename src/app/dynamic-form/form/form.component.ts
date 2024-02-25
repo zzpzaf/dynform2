@@ -4,9 +4,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
-import { IFormField } from '../../dataObjects/IFormField';
+import { IFormField, IFormFieldValidator } from '../../dataObjects/IFormField';
 import { ApplyFormControlDirective } from '../apply-form-control.directive';
 import { ItemFormFieldsService } from '../../services/item-form-fields.service';
 import { IItem } from '../../dataObjects/iitem';
@@ -32,15 +32,11 @@ export class FormComponent {
 
   constructor( private formBuilder: FormBuilder ) { 
     effect(()=> {
-      // this.item = this.itemService.$item()!;
-      // console.log('>===>> 2. FormComponent - item', this.item);
       this.formFields = this.itemService.$formFields();
-      // console.log('>===>> FormComponent - Constructor - formFields', this.formFields);
       this.setFormControlValues();
     });
   }
  
-  // public formFields: IFormField[] = ItemsFormFields;
   public formFields!: IFormField[];
   public fornCardTitle: string = 'Dynamic Form with Dynamic Components';
   public dynFormGroup!: FormGroup;
@@ -56,17 +52,16 @@ export class FormComponent {
   }
 
   initializeForm(): void {
-    // if (this.formFields === undefined || this.formFields.length <= 0) return;
-    // console.log('>===>> FormComponent - initializeForm - formFields', this.formFields);
     const fbGroup = this.formBuilder.group({});
     this.formFields.forEach((field) => {
-      // if (this.item && this.item.itemId > 0) field.initialValue = this.item[field.dataField as keyof IItem];
-      fbGroup.addControl(
+       fbGroup.addControl(
         field.controlName,
         new FormControl(
           field.initialValue !== undefined && field.initialValue !== null
             ? field.initialValue
             : ''
+            ,
+            this.bindValidators(field.validators!)
         )
       );
     });
@@ -75,8 +70,6 @@ export class FormComponent {
   }
 
   setFormControlValues(): void {
-    // console.log('>===>> FormComponent - formFields', this.formFields);
-  
     if (this.dynFormGroup === undefined) {
       this.initializeForm();
     }
@@ -89,12 +82,21 @@ export class FormComponent {
     }
   }
 
-
-
-  
+  bindValidators(validators: IFormFieldValidator[]) {
+    if (!validators || validators.length <= 0) return [];
+    const validatorsList: any[] = [];
+    validators.forEach((myValidator) => {
+      validatorsList.push(myValidator.validator);
+    });
+    return Validators.compose(validatorsList);
+  }
 
   onFormSubmit(event: Event): void {
     this.isFormSubmitted = true;
+    if (this.dynFormGroup.invalid) {
+      console.log('onFormSubmit() - dynFormGroup is invalid!');
+      return;
+    }
     console.log('onFormSubmit() - dynFormGroup', this.dynFormGroup);
   }
 
