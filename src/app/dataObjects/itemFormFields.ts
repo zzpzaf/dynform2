@@ -16,7 +16,7 @@ export const ItemsFormFields: IFormField[] = [
     dataField: 'itemId',
     controlType: 'input',
     controlName: 'itemId',
-    fieldLabel: 'Item Id',
+    fieldLabel: 'Item Id: ',
     inputType: 'number',
     readOnly: true,
   },
@@ -24,7 +24,7 @@ export const ItemsFormFields: IFormField[] = [
     dataField: 'itemName',
     controlType: 'input',
     controlName: 'itemName',
-    fieldLabel: 'Item Name',
+    fieldLabel: 'Item Name:',
     inputType: 'text',
   },
   {

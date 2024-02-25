@@ -7,7 +7,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { IFormField } from '../../dataObjects/IFormField';
-import { ItemsFormFields } from '../../dataObjects/itemFormFields';
 import { ApplyFormControlDirective } from '../apply-form-control.directive';
 import { ItemFormFieldsService } from '../../services/item-form-fields.service';
 import { IItem } from '../../dataObjects/iitem';
@@ -33,28 +32,35 @@ export class FormComponent {
 
   constructor( private formBuilder: FormBuilder ) { 
     effect(()=> {
-      this.item = this.itemService.$item()!;     
+      // this.item = this.itemService.$item()!;
+      // console.log('>===>> 2. FormComponent - item', this.item);
+      this.formFields = this.itemService.$formFields();
+      // console.log('>===>> FormComponent - Constructor - formFields', this.formFields);
       this.setFormControlValues();
     });
   }
  
-  public formFields: IFormField[] = ItemsFormFields;
+  // public formFields: IFormField[] = ItemsFormFields;
+  public formFields!: IFormField[];
   public fornCardTitle: string = 'Dynamic Form with Dynamic Components';
   public dynFormGroup!: FormGroup;
   private itemService = inject(ItemFormFieldsService); 
   private item!: IItem;
+  public isFormSubmitted: boolean = false;
  
  
   
   ngOnInit(): void {
-      this.initializeForm();
+    this.formFields = this.itemService.$formFields();
+    this.initializeForm();
   }
 
   initializeForm(): void {
+    // if (this.formFields === undefined || this.formFields.length <= 0) return;
+    // console.log('>===>> FormComponent - initializeForm - formFields', this.formFields);
     const fbGroup = this.formBuilder.group({});
-    
     this.formFields.forEach((field) => {
-      if (this.item && this.item.itemId > 0) field.initialValue = this.item[field.dataField as keyof IItem];
+      // if (this.item && this.item.itemId > 0) field.initialValue = this.item[field.dataField as keyof IItem];
       fbGroup.addControl(
         field.controlName,
         new FormControl(
@@ -69,12 +75,13 @@ export class FormComponent {
   }
 
   setFormControlValues(): void {
+    // console.log('>===>> FormComponent - formFields', this.formFields);
+  
     if (this.dynFormGroup === undefined) {
       this.initializeForm();
     }
     for (let control in this.dynFormGroup.controls) {
       this.formFields.forEach((field) => {
-        if (this.item && this.item.itemId > 0) field.initialValue = this.item[field.dataField as keyof IItem];
         if (field.controlName === control) {
           this.dynFormGroup.controls[control].patchValue(field.initialValue);
         }
@@ -82,8 +89,13 @@ export class FormComponent {
     }
   }
 
+
+
+  
+
   onFormSubmit(event: Event): void {
-    console.log('Form Submitted', this.dynFormGroup.value);
+    this.isFormSubmitted = true;
+    console.log('onFormSubmit() - dynFormGroup', this.dynFormGroup);
   }
 
 }

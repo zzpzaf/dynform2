@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IItem } from '../dataObjects/iitem';
 import { Observable, catchError, retry, throwError } from 'rxjs';
+import { ICategory } from '../dataObjects/icatecory';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,11 @@ export class DataService {
     return items;
   }
 
+  getCategories(): Observable<ICategory[]> {
+    return this.http
+      .get<ICategory[]>(this.baseURL +`categories.json`)
+      .pipe(retry(1), catchError(this.handleError));
+  }
 
   // Error handling
   handleError(error: any) {

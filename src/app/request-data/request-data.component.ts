@@ -34,6 +34,7 @@ export class RequestDataComponent {
     this.requestFormGroup.valueChanges.subscribe(val => {
       const id = this.requestFormGroup.get(this.input1ControlNane)?.value;
       if (id == undefined || id == null || id == '' || id <= 0) return;
+      // console.log('>===>> RequestDataComponent - id', id);
       this.itemService.setItemId(id!);
     });
   }
