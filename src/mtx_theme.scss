@@ -1,0 +1,54 @@
+// ******************************************************************
+// Note for Theming the Datetimepicker of the matero/extensions:
+// ------------------------------------------------------------------ 
+// See more, for the newer versions, at 
+// https://github.com/ng-matero/extensions 
+// and for older version prior 12, see at:
+// https://www.npmjs.com/package/@ng-matero/extensions/v/11.5.0
+// In the section "Theming"
+// For general Angular Material Theming, see at:
+// https://material.angular.io/guide/theming#themes
+// ******************************************************************
+
+@use '@ng-matero/extensions' as mtx;
+@use '@angular/material' as mat;
+@include mat.core();
+// @import '@angular/material/theming';     <--- Changed in Angular 17 -  No need to @import '@angular/material/theming' any more
+
+
+// Set your theme palettes here. 
+// Use the default them palette  
+$primary: mat.define-palette(mat.$indigo-palette);
+$accent: mat.define-palette(mat.$pink-palette);
+$warn: mat.define-palette(mat.$red-palette);
+
+// Or define your own, e.g.:
+// $primary: mat-palette($mat-blue-grey, 900, 500, 700);
+// $accent: mat-palette($mat-red, 900, 800, 700);
+// $warn: mat-palette($mat-deep-orange);
+// The warn palette is optional (defaults to red).
+// For predefined Material color palettes see at:
+// https://m1.material.io/style/color.html#
+
+
+// Construct a theme by calling either define-light-theme or define-dark-theme
+// Create the theme object (a Sass map containing: a map containing the keys "color", "typography", and "density".
+// --->  $theme1: mat-light-theme((   <--- Changed in Angular 17 because no need to @import '@angular/material/theming';
+$theme1: mat.define-light-theme((  
+ color: (
+   primary: $primary,
+   accent: $accent,
+   warn: $warn,
+ ),
+ typography: mat.define-typography-config(),
+ density: 0,
+));
+
+// If you wish to apply/emit theme-dependent styles
+// defined by your own custom palette colors in theme1, 
+// and then apply the theme1 as the default theme,
+// uncomment the following line:
+// @include angular-material-theme($theme1);
+
+// The following line, is where we actually assign the 'theme1'to the matero/extensions:
+@include mtx.all-component-themes($theme1);

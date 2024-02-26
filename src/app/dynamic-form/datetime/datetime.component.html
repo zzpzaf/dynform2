@@ -1,5 +1,5 @@
 
-<div [formGroup]="fGroup">
+<!-- <div [formGroup]="fGroup">
     <p></p>
     <div style="text-align: left;">
       <br />
@@ -10,4 +10,29 @@
         [type]="field.inputType"
       />
     </div>
-</div>
+</div> -->
+
+<mat-form-field>
+    <div [formGroup]="fGroup" class="mat-dtpicker">
+      <mat-label>{{ field.fieldLabel }}</mat-label>
+      <mtx-datetimepicker
+      #datetimePicker
+      [type]="mtxType"
+      
+      >
+    </mtx-datetimepicker>
+
+    <input
+      matInput
+      [mtxDatetimepicker]="datetimePicker"
+      formControlName="{{ field.controlName }}"
+    />
+
+    <mtx-datetimepicker-toggle
+      [for]="datetimePicker"
+      matSuffix
+      >
+    </mtx-datetimepicker-toggle>
+
+    </div>
+</mat-form-field>

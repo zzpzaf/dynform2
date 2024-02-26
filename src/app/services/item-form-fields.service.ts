@@ -113,9 +113,9 @@ export class ItemFormFieldsService {
   }
 
   private dateTimeString(dt: Date): string {  
-    const dtStr = formatDate(dt, 'yyyy-MM-ddTHH:mm:ss.SSS', 'en-US');   // For the default native DateTime Picker
+    // const dtStr = formatDate(dt, 'yyyy-MM-ddTHH:mm:ss.SSS', 'en-US');   // For the default native DateTime Picker
     // const dtStr = formatDate(dt, 'yyyy-MM-ddTHH:mm:ss.SSS', 'en-US')+"Z";
-    // const dtStr = new Date(dt).toISOString();
+    const dtStr = new Date(dt).toISOString();
     return dtStr;
   }
 }
