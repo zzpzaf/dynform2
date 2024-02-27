@@ -12,8 +12,9 @@ import { formatDate } from '@angular/common';
 // }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'any' 
 })
+
 export class ItemFormFieldsService {
 
   constructor() {

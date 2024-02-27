@@ -10,6 +10,7 @@ import { IFormField, IFormFieldValidator } from '../../dataObjects/IFormField';
 import { ApplyFormControlDirective } from '../apply-form-control.directive';
 import { ItemFormFieldsService } from '../../services/item-form-fields.service';
 import { IItem } from '../../dataObjects/iitem';
+import { FormFieldsModule } from '../form-fields.module';
 
 @Component({
   selector: 'dyn-form',
@@ -23,7 +24,9 @@ import { IItem } from '../../dataObjects/iitem';
     MatInputModule,
     MatFormFieldModule,
     ApplyFormControlDirective,
+    FormFieldsModule,
   ],
+  // providers: [FormFieldsModule],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss',
 
@@ -37,10 +40,10 @@ export class FormComponent {
     });
   }
  
+  private itemService = inject(ItemFormFieldsService); 
   public formFields!: IFormField[];
   public fornCardTitle: string = 'Dynamic Form with Dynamic Components';
   public dynFormGroup!: FormGroup;
-  private itemService = inject(ItemFormFieldsService); 
   private item!: IItem;
   public isFormSubmitted: boolean = false;
  

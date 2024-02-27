@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ItemFormFieldsService } from '../services/item-form-fields.service';
 import { MatInputModule } from '@angular/material/input';
 import { FormComponent } from '../dynamic-form/form/form.component';
+import { FormFieldsModule } from '../dynamic-form/form-fields.module';
 
 @Component({
   selector: 'request-data',
@@ -11,7 +12,9 @@ import { FormComponent } from '../dynamic-form/form/form.component';
     ReactiveFormsModule,
     FormComponent,
     MatInputModule,
+    FormFieldsModule,
   ],
+  // providers: [FormFieldsModule],
   templateUrl: './request-data.component.html',
   styleUrl: './request-data.component.scss',
 })
@@ -19,9 +22,10 @@ export class RequestDataComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private itemService: ItemFormFieldsService
+    // private itemService: ItemFormFieldsService
   ) {}
 
+  private itemService = inject(ItemFormFieldsService); 
   requestFormGroup!: FormGroup;
   input1Label: string = 'Item Id';
   input1Placeholder: string = 'Input Id here';
