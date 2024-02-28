@@ -3,9 +3,9 @@ import { DataService } from './data.service';
 import { IItem } from '../dataObjects/iitem';
 import { ICategory } from '../dataObjects/icatecory';
 import { IFormField, IFormOptions } from '../dataObjects/IFormField';
-import { ItemsFormFields } from '../dataObjects/itemFormFields';
-import { formatDate } from '@angular/common';
-
+import { ItemsFormFields } from '../dataObjects/dbDataFormFields';
+//  import { formatDate } from '@angular/common';
+import { FormFieldsService } from './form-fields-service';
 
 // export function equalPrimitives<T>(a: T, b: T): boolean {
 //   return (a === null || typeof a !== 'object') && Object.is(a, b);
@@ -15,9 +15,10 @@ import { formatDate } from '@angular/common';
   providedIn: 'any' 
 })
 
-export class ItemFormFieldsService {
+export class ItemFormFieldsService extends FormFieldsService{
 
   constructor() {
+    super();
     this.itemsDataServise
     .getCategories()
     .subscribe((categories: ICategory[]) => {
@@ -30,12 +31,12 @@ export class ItemFormFieldsService {
   }
 
   private itemsDataServise = inject(DataService); 
-  private formFields: IFormField[] = ItemsFormFields;
+  override formFields: IFormField[] = ItemsFormFields;
 
   // public $formFields = signal< IFormField[]>(this.formFields, {equal: equalPrimitives});          // The Signal using custom equality function - equalPrimitives
   public $formFields = signal< IFormField[]>(this.formFields);                                  // The Signal with the default equality function - object.js
 
-  public setItemId(itemId: number) {
+  public setId(itemId: number) {
     this.itemsDataServise.getItems().subscribe((items: IItem[]) => {
       const item: IItem = items.find((item: IItem) => item['itemId'] === itemId)!;
       // this.$item.update(()=>item);

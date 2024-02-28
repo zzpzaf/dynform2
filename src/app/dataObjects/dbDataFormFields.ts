@@ -114,3 +114,42 @@ export const ItemsFormFields: IFormField[] = [
       
 ]
 
+
+export const CategoriesFormFields: IFormField[] = [
+
+  {
+    dataField: 'categoryId',
+    controlType: 'input',
+    controlName: 'categoryId',
+    fieldLabel: 'Category Id:',
+    inputType: 'number',
+    readOnly: true,
+
+  },
+  {
+    dataField: 'categoryName',
+    controlType: 'input',
+    controlName: 'categoryName',
+    fieldLabel: 'Category Name:',
+    inputType: 'text',
+    validators: [],
+  },
+  {
+    dataField: 'categoryDescription',
+    controlType: 'input',
+    controlName: 'categoryDescription',
+    fieldLabel: 'Category Description:',
+    inputType: 'text',
+    // initialValue: '',
+  },
+  {
+    controlType: 'button',
+    controlName: 'submitButton',
+    fieldLabel: 'Submit:',
+    inputType: 'submit',
+  },
+
+
+
+
+]

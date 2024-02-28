@@ -1,5 +1,5 @@
 import { ComponentRef, Directive, ViewContainerRef, effect, input } from '@angular/core';
-import { dynComponents } from '../dataObjects/itemFormFields';
+import { dynComponents } from '../dataObjects/dbDataFormFields';
 import { IFormField } from '../dataObjects/IFormField';
 
 @Directive({

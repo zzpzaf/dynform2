@@ -11,6 +11,7 @@ import { ApplyFormControlDirective } from '../apply-form-control.directive';
 import { ItemFormFieldsService } from '../../services/item-form-fields.service';
 import { IItem } from '../../dataObjects/iitem';
 import { FormFieldsModule } from '../form-fields.module';
+import { FormFieldsService } from '../../services/form-fields-service';
 
 @Component({
   selector: 'dyn-form',
@@ -40,7 +41,7 @@ export class FormComponent {
     });
   }
  
-  private itemService = inject(ItemFormFieldsService); 
+  private itemService = inject(FormFieldsService); 
   public formFields!: IFormField[];
   public fornCardTitle: string = 'Dynamic Form with Dynamic Components';
   public dynFormGroup!: FormGroup;

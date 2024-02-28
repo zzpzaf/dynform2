@@ -4,6 +4,7 @@ import { ItemFormFieldsService } from '../services/item-form-fields.service';
 import { MatInputModule } from '@angular/material/input';
 import { FormComponent } from '../dynamic-form/form/form.component';
 import { FormFieldsModule } from '../dynamic-form/form-fields.module';
+import { FormFieldsService } from '../services/form-fields-service';
 
 @Component({
   selector: 'request-data',
@@ -25,7 +26,7 @@ export class RequestDataComponent {
     // private itemService: ItemFormFieldsService
   ) {}
 
-  private itemService = inject(ItemFormFieldsService); 
+  private itemService = inject(FormFieldsService); 
   requestFormGroup!: FormGroup;
   input1Label: string = 'Item Id';
   input1Placeholder: string = 'Input Id here';
@@ -39,7 +40,7 @@ export class RequestDataComponent {
       const id = this.requestFormGroup.get(this.input1ControlNane)?.value;
       if (id == undefined || id == null || id == '' || id <= 0) return;
       // console.log('>===>> RequestDataComponent - id', id);
-      this.itemService.setItemId(id!);
+      this.itemService.setId(id!);
     });
   }
 
