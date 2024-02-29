@@ -5,7 +5,7 @@ import { ICategory } from '../dataObjects/icatecory';
 import { IFormField, IFormOptions } from '../dataObjects/IFormField';
 import { ItemsFormFields } from '../dataObjects/dbDataFormFields';
 //  import { formatDate } from '@angular/common';
-import { FormFieldsService } from './form-fields-service';
+import { BaseFormFieldsService } from './base-form-fields.service';
 
 // export function equalPrimitives<T>(a: T, b: T): boolean {
 //   return (a === null || typeof a !== 'object') && Object.is(a, b);
@@ -15,7 +15,7 @@ import { FormFieldsService } from './form-fields-service';
   providedIn: 'any' 
 })
 
-export class ItemFormFieldsService extends FormFieldsService{
+export class ItemFormFieldsService extends BaseFormFieldsService{
 
   constructor() {
     super();

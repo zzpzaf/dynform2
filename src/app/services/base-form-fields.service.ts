@@ -1,7 +1,7 @@
-import { Signal, signal } from "@angular/core";
+import { Signal, WritableSignal, signal } from "@angular/core";
 import { IFormField } from "../dataObjects/IFormField";
 
-export abstract class FormFieldsService {
+export abstract class BaseFormFieldsService {
     
 
     constructor () {};

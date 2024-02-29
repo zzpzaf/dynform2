@@ -8,10 +8,9 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { RouterOutlet } from '@angular/router';
 import { IFormField, IFormFieldValidator } from '../../dataObjects/IFormField';
 import { ApplyFormControlDirective } from '../apply-form-control.directive';
-import { ItemFormFieldsService } from '../../services/item-form-fields.service';
 import { IItem } from '../../dataObjects/iitem';
-import { FormFieldsModule } from '../form-fields.module';
-import { FormFieldsService } from '../../services/form-fields-service';
+import { BaseFormFieldsService } from '../../services/base-form-fields.service';
+import { FormFieldsFacroryService } from '../../services/form-fields-facrory.service';
 
 @Component({
   selector: 'dyn-form',
@@ -25,7 +24,6 @@ import { FormFieldsService } from '../../services/form-fields-service';
     MatInputModule,
     MatFormFieldModule,
     ApplyFormControlDirective,
-    FormFieldsModule,
   ],
   // providers: [FormFieldsModule],
   templateUrl: './form.component.html',
@@ -35,23 +33,37 @@ import { FormFieldsService } from '../../services/form-fields-service';
 export class FormComponent {
 
   constructor( private formBuilder: FormBuilder ) { 
+    this.ffService = FormFieldsFacroryService.getFormFieldsService();
+    console.log('>===>> FormComponent - ffService', typeof(this.ffService), ' - ',this.ffService);
     effect(()=> {
-      this.formFields = this.itemService.$formFields();
+      if (this.ffService !== undefined) {
+        this.formFields = this.ffService.$formFields();
+      }
       this.setFormControlValues();
     });
   }
  
-  private itemService = inject(FormFieldsService); 
+  private ffService!: BaseFormFieldsService; //=inject(FormFieldsService); 
   public formFields!: IFormField[];
   public fornCardTitle: string = 'Dynamic Form with Dynamic Components';
   public dynFormGroup!: FormGroup;
-  private item!: IItem;
   public isFormSubmitted: boolean = false;
- 
- 
   
   ngOnInit(): void {
-    this.formFields = this.itemService.$formFields();
+    if (this.ffService !== undefined) {
+      this.formFields = this.ffService.$formFields();
+    } else {
+      console.log('>===>> FormComponent - ffService is undefined!!!');
+      this.formFields = [ 
+       {
+          controlType: 'button',
+          controlName: 'submitButton',
+          fieldLabel: 'Error !!!',
+          inputType: 'submit',
+        },
+      ]
+    }
+    
     this.initializeForm();
   }
 

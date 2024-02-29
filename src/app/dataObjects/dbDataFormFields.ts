@@ -10,6 +10,7 @@ import { RadioComponent } from "../dynamic-form/radio/radio.component";
 import { SelectComponent } from "../dynamic-form/select/select.component";
 
 
+
 // export const dynComponents: { [key: string]: Type<any> } = {
 export const dynComponents: { [type in dynControlType]?: any } = {
   button: ButtonComponent,

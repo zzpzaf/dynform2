@@ -1,5 +1,5 @@
 import { Injectable, inject, signal } from "@angular/core";
-import { FormFieldsService } from "./form-fields-service";
+import { BaseFormFieldsService } from "./base-form-fields.service";
 import { IFormField } from "../dataObjects/IFormField";
 import { CategoriesFormFields } from "../dataObjects/dbDataFormFields";
 import { DataService } from "./data.service";
@@ -12,7 +12,7 @@ import { ICategory } from "../dataObjects/icatecory";
     providedIn: 'any' 
   })
   
-export class CategoryFormFieldsService extends FormFieldsService{
+export class CategoryFormFieldsService extends BaseFormFieldsService{
 
 constructor () {
     super();
