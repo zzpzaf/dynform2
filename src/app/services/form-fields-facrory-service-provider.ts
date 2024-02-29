@@ -6,28 +6,28 @@ import { CategoryFormFieldsService } from './category-form-fields.service';
 
 
 
-@Injectable({
-  providedIn: 'any'
-})
-export class FormFieldsFacroryService {
+// @Injectable({
+//   providedIn: 'any'
+// })
+export class FormFieldsFacroryServiceProvider {
 
   static ffService: BaseFormFieldsService;
   
-  constructor(@Inject('dataSetName') private dataSetName: string ) {
-  // constructor(dataSetName: string ) {  
+  // constructor(@Inject('dataSetName') private dataSetName: string ) {
+  constructor(dataSetName: string ) {  
     if (dataSetName === 'items') {
-      FormFieldsFacroryService.ffService = inject(ItemFormFieldsService);
+      FormFieldsFacroryServiceProvider.ffService = inject(ItemFormFieldsService);
     } else if (dataSetName === 'categories') {
-      FormFieldsFacroryService.ffService = inject(CategoryFormFieldsService);
+      FormFieldsFacroryServiceProvider.ffService = inject(CategoryFormFieldsService);
     }
   }
 
   public setId(itemId: number) {
-    if (FormFieldsFacroryService.ffService === undefined) {
+    if (FormFieldsFacroryServiceProvider.ffService === undefined) {
       console.log('FormFieldsFacroryService - setId - ffService is undefined');
       return;
     }
-    FormFieldsFacroryService.ffService.setId(itemId);
+    FormFieldsFacroryServiceProvider.ffService.setId(itemId);
   }
 
   public static getFormFieldsService() : BaseFormFieldsService {

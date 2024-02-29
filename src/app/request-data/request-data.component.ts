@@ -2,8 +2,9 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { FormComponent } from '../dynamic-form/form/form.component';
-import { FormFieldsFacroryService } from '../services/form-fields-facrory.service';
+import { FormFieldsFacroryServiceProvider } from '../services/form-fields-facrory-service-provider';
 import { BaseFormFieldsService } from '../services/base-form-fields.service';
+import { dataSetName } from '../dataObjects/IFormField';
 
 @Component({
   selector: 'request-data',
@@ -13,10 +14,10 @@ import { BaseFormFieldsService } from '../services/base-form-fields.service';
     FormComponent,
     MatInputModule,
   ],
-  providers: [
-    { provide: 'dataSetName', useValue: 'items' },
-    FormFieldsFacroryService
-  ],
+  // providers: [
+  //   { provide: 'dataSetName', useValue: 'items' },
+  //   FormFieldsFacroryService
+  // ],
   templateUrl: './request-data.component.html',
   styleUrl: './request-data.component.scss',
 })
@@ -24,9 +25,9 @@ export class RequestDataComponent {
 
   constructor(private formBuilder: FormBuilder,) {}
 
-  private baseService = inject(FormFieldsFacroryService); 
-  // private dtToken = 'categories';
-  // private baseService = new FormFieldsFacroryService(this.dtToken); 
+  // private baseService = inject(FormFieldsFacroryService); 
+  private dtToken: dataSetName = 'items';
+  private baseService = new FormFieldsFacroryServiceProvider(this.dtToken); 
   private ffService!: BaseFormFieldsService;
 
 
@@ -37,8 +38,7 @@ export class RequestDataComponent {
   submitButtomText: string = 'Get it';
   
   ngOnInit() {
-    this.ffService = FormFieldsFacroryService.getFormFieldsService();
-    // FormFieldsService.$selectedTable.set('categories');
+    this.ffService = FormFieldsFacroryServiceProvider.getFormFieldsService();
     this.initializeForm();
     this.requestFormGroup.valueChanges.subscribe(val => {
       const id = this.requestFormGroup.get(this.input1ControlNane)?.value;

@@ -1,5 +1,6 @@
 
 
+export type dataSetName = 'items' | 'categories'; 
 
 export type dynControlType =
   | 'button'

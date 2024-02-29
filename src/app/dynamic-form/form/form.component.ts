@@ -10,7 +10,7 @@ import { IFormField, IFormFieldValidator } from '../../dataObjects/IFormField';
 import { ApplyFormControlDirective } from '../apply-form-control.directive';
 import { IItem } from '../../dataObjects/iitem';
 import { BaseFormFieldsService } from '../../services/base-form-fields.service';
-import { FormFieldsFacroryService } from '../../services/form-fields-facrory.service';
+import { FormFieldsFacroryServiceProvider } from '../../services/form-fields-facrory-service-provider';
 
 @Component({
   selector: 'dyn-form',
@@ -33,7 +33,7 @@ import { FormFieldsFacroryService } from '../../services/form-fields-facrory.ser
 export class FormComponent {
 
   constructor( private formBuilder: FormBuilder ) { 
-    this.ffService = FormFieldsFacroryService.getFormFieldsService();
+    this.ffService = FormFieldsFacroryServiceProvider.getFormFieldsService();
     console.log('>===>> FormComponent - ffService', typeof(this.ffService), ' - ',this.ffService);
     effect(()=> {
       if (this.ffService !== undefined) {
