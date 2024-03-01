@@ -14,6 +14,30 @@
 
 } 
 
+.toolbar-row2 {
+    display:flex;
+    flex-direction: row;
+    align-items: center; 
+    justify-content:flex-start;  
+    gap: 10px;
+    // padding-inline: 10px;
+    // margin-inline: 10px;
+} 
+
+.row_button {
+    display:flex;
+    background-color:aquamarine ;
+    color:blue !important; 
+    flex-direction: row;
+    align-items:center;
+    justify-content: center;
+
+    // flex: .0125 1 auto;
+    // font-family: Verdana, Geneva, Tahoma, sans-serif;
+    // font-weight: 600;
+    // font-size: calc(1.2 * 16px);
+
+} 
 
 .my-icon {
     padding-right: 3px;
