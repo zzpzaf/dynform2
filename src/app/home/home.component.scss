@@ -1,6 +1,6 @@
 
 
-.toolbar-spacer1 {
+.flex-spacer1 {
     flex: 1 1 auto;
 } 
 .toolbar-row {
@@ -14,15 +14,19 @@
 
 } 
 
-.toolbar-row2 {
+mat-button-toggle-group {
+    height: 32px;
     display:flex;
     flex-direction: row;
     align-items: center; 
     justify-content:flex-start;  
-    gap: 10px;
-    // padding-inline: 10px;
-    // margin-inline: 10px;
-} 
+    gap: 20px;
+    border-style:none; 
+}
+
+mat-button-toggle {
+    border-radius: 1.4cap; 
+}
 
 .row_button {
     display:flex;
@@ -31,12 +35,6 @@
     flex-direction: row;
     align-items:center;
     justify-content: center;
-
-    // flex: .0125 1 auto;
-    // font-family: Verdana, Geneva, Tahoma, sans-serif;
-    // font-weight: 600;
-    // font-size: calc(1.2 * 16px);
-
 } 
 
 .my-icon {

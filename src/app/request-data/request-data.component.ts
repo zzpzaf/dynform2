@@ -6,6 +6,7 @@ import { FormFieldsFacroryServiceProvider } from '../services/form-fields-facror
 import { BaseFormFieldsService } from '../services/base-form-fields.service';
 import { dataSetName } from '../dataObjects/IFormField';
 import { ActivatedRoute } from '@angular/router';
+import { DbEntities } from '../dataObjects/dbDataFormFields';
 
 @Component({
   selector: 'request-data',
@@ -14,7 +15,6 @@ import { ActivatedRoute } from '@angular/router';
     ReactiveFormsModule,
     FormComponent,
     MatInputModule,
-    // RouterLinkActive,
   ],
   providers: [],
   templateUrl: './request-data.component.html',
@@ -28,33 +28,24 @@ export class RequestDataComponent {
     ) {
       this.activatedRoute.data.subscribe(data => {
         this.dtToken = data['dtToken'];
-        // console.log('RequestDataComponent - this.dtToken', this.dtToken);
         this.setIdNames(this.dtToken);
         this.baseService = new FormFieldsFacroryServiceProvider(this.dtToken);
       });
   
     }
 
-  // private baseService = inject(FormFieldsFacroryService); 
-  private dtToken!: dataSetName; //= 'categories';
-  private baseService: any;  //= new FormFieldsFacroryServiceProvider(this.dtToken); 
+  private dtToken!: dataSetName; 
+  private baseService: any;  
   private ffService!: BaseFormFieldsService;
 
 
   requestFormGroup!: FormGroup;
-  input1Label: string = 'Item Id';
+  input1Label: string = 'Id';
   input1Placeholder: string = 'Input Id here';
   input1ControlNane: string = 'id';
-  // submitButtomText: string = 'Get it';
+
   
   ngOnInit() {
-
-    // this.activatedRoute.data.subscribe(data => {
-    //   this.dtToken = data['dtToken'];
-    //   console.log('RequestDataComponent - this.dtToken', this.dtToken);
-    //   this.baseService = new FormFieldsFacroryServiceProvider(this.dtToken);
-    // });
-
 
     this.ffService = FormFieldsFacroryServiceProvider.getFormFieldsService();
 
@@ -62,7 +53,6 @@ export class RequestDataComponent {
     this.requestFormGroup.valueChanges.subscribe(val => {
       const id = this.requestFormGroup.get(this.input1ControlNane)?.value;
       if (id == undefined || id == null || id == '' || id <= 0) return;
-      // console.log('>===>> RequestDataComponent - id', id);
       this.ffService.setId(id!);
     });
   }
@@ -74,21 +64,9 @@ export class RequestDataComponent {
   }
 
   setIdNames(token: dataSetName): void {
-    let entityName: string = '';
-    switch ( token ) {
-      case 'categories':
-          entityName = 'Category';
-          break;
-      case 'items':
-          entityName = 'Item';
-          break;
-      default: 
-          // 
-          break;
-   }
-   this.input1Label = entityName + ' Id';
-   this.input1Placeholder = 'Input ' + entityName +  ' Id here';
-
+    let entityName: string = DbEntities.filter(entity => entity.bLink === token)[0].name;   
+    this.input1Label = entityName + ' Id';
+    this.input1Placeholder = 'Input ' + entityName +  ' Id here';
   }
 
 

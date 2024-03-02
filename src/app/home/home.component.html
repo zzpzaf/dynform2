@@ -6,36 +6,31 @@
          
           <a class="toolbar-row" mat-button routerLink='/about'>
             <mat-icon class="my-icon">home</mat-icon>
-            <span class="toolbar-spacer1">{{appHeaderTitle}}</span>
+            <span class="flex-spacer1">{{appHeaderTitle}}</span>
             
           </a>
-          <span class="toolbar-spacer1"></span>
+          <span class="flex-spacer1"></span>
           <div class="font-size3">{{myInfo}}</div>
   
     </mat-toolbar-row>
 
-    <mat-toolbar-row class='toolbar-row2'>  
-         
-      <a class="row_button" mat-button routerLink='/items'>
-        <!-- <mat-icon class="my-icon">home</mat-icon> -->
-        <span class="toolbar-spacer1">{{txtButton1}}</span>
-      </a>
+    <mat-toolbar-row >  
+      
+      <mat-button-toggle-group name="toolbar2">
+        @for (buton of dboButtons; track $index ) {
+          <mat-button-toggle class="row_button" routerLink='/{{buton.bLink}}' value="{{buton.bLink}}" >
+            {{buton.btext}}
+          </mat-button-toggle>
+        }
+      </mat-button-toggle-group>
 
-      <!-- <span class="toolbar-spacer1"></span> -->
-
-      <a class="row_button" mat-button routerLink='/categories'>
-        <!-- <mat-icon class="my-icon">home</mat-icon> -->
-        <span class="toolbar-spacer1">{{txtButton2}}</span>
-      </a>
-
-       <span class="toolbar-spacer1"></span>
+      <span class="flex-spacer1"></span>
 
       <a class="row_button" mat-button routerLink='/about'>
-        <!-- <mat-icon class="my-icon">home</mat-icon> -->
-        <span class="toolbar-spacer1">About</span>
+        <span class="flex-spacer1">About</span>
       </a>
 
-</mat-toolbar-row>
+    </mat-toolbar-row>
 
 </mat-toolbar>
 

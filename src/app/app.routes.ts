@@ -1,12 +1,22 @@
-import { Routes } from '@angular/router';
+import { Route, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { RequestDataComponent } from './request-data/request-data.component';
 import { AboutComponent } from './about/about.component';
+import { DbEntities } from './dataObjects/dbDataFormFields';
+
+
+const dbObjectRoutes: Routes = [];
+DbEntities.forEach((dbEntity) => {
+    let dbRoute: Route = { path: dbEntity.bLink, component: RequestDataComponent, data: { dtToken: dbEntity.bLink } };
+    dbObjectRoutes.push(dbRoute);
+    //dbObjectRoutes.push({ path: dbEntity.bLink, component: RequestDataComponent, data: { dtToken: dbEntity.bLink } });
+});
 
 export const routes: Routes = [
-    // { path: '', redirectTo: '/', pathMatch: 'full' },
+
     { path: '', component: HomeComponent },
-    { path: 'items', component: RequestDataComponent, data: { dtToken: 'items' } },
-    { path: 'categories', component: RequestDataComponent, data: { dtToken: 'categories' } },
+    // { path: DbEntities[0].bLink , component: RequestDataComponent, data: { dtToken: DbEntities[0].bLink } },
+    // { path: DbEntities[1].bLink , component: RequestDataComponent, data: { dtToken: DbEntities[1].bLink  } },
     { path: 'about', component: AboutComponent },
+    ...dbObjectRoutes
 ];

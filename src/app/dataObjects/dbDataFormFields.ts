@@ -3,7 +3,6 @@ import { Validators } from "@angular/forms";
 import { ButtonComponent } from "../dynamic-form/button/button.component";
 import { InputComponent } from "../dynamic-form/input/input.component";
 import { IFormField, dynControlType} from "./IFormField";
-import { Type } from "@angular/core";
 import { CheckboxComponent } from "../dynamic-form/checkbox/checkbox.component";
 import { DatetimeComponent } from "../dynamic-form/datetime/datetime.component";
 import { RadioComponent } from "../dynamic-form/radio/radio.component";
@@ -20,6 +19,13 @@ export const dynComponents: { [type in dynControlType]?: any } = {
   datetime: DatetimeComponent,
   checkbox: CheckboxComponent,  
 };
+
+
+export const DbEntities = [
+  {id: 1, btext: 'Items', bLink: 'items', name: 'Item'},
+  {id: 2, btext: 'Categories', bLink: 'categories', name: 'Category'}
+]
+
 
 export const ItemsFormFields: IFormField[] = [
 
@@ -106,7 +112,7 @@ export const ItemsFormFields: IFormField[] = [
   {
     controlType: 'button',
     controlName: 'submitButton',
-    fieldLabel: 'Submit:',
+    fieldLabel: 'Submit',
     inputType: 'submit',
   },
 
@@ -146,7 +152,7 @@ export const CategoriesFormFields: IFormField[] = [
   {
     controlType: 'button',
     controlName: 'submitButton',
-    fieldLabel: 'Submit:',
+    fieldLabel: 'Submit',
     inputType: 'submit',
   },
 
