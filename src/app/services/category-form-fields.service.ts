@@ -1,7 +1,7 @@
 import { Injectable, inject, signal } from "@angular/core";
-import { BaseFormFieldsService } from "./base-form-fields.service";
+import { BaseFormFieldService } from "./base-form-fields.service";
 import { IFormField } from "../dataObjects/IFormField";
-import { CategoriesFormFields } from "../dataObjects/dbDataFormFields";
+import { CategoryFormFields } from "../dataObjects/dbDataFormFields";
 import { DataService } from "./data.service";
 import { ICategory } from "../dataObjects/icatecory";
 
@@ -12,7 +12,7 @@ import { ICategory } from "../dataObjects/icatecory";
     providedIn: 'any' 
   })
   
-export class CategoryFormFieldsService extends BaseFormFieldsService{
+export class CategoryFormFieldsService extends BaseFormFieldService{
 
 constructor () {
     super();
@@ -28,7 +28,7 @@ constructor () {
   }
 
   private categoriesDataServise = inject(DataService); 
-  override formFields: IFormField[] = CategoriesFormFields;
+  override formFields: IFormField[] = CategoryFormFields;
   public $formFields = signal< IFormField[]>(this.formFields); 
   
   public setId(categoryId: number) {

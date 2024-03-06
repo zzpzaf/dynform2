@@ -9,9 +9,7 @@ import { RadioComponent } from "../dynamic-form/radio/radio.component";
 import { SelectComponent } from "../dynamic-form/select/select.component";
 
 
-
-// export const dynComponents: { [key: string]: Type<any> } = {
-export const dynComponents: { [type in dynControlType]?: any } = {
+export const DynComponents: { [type in dynControlType]?: any } = {
   button: ButtonComponent,
   input: InputComponent,
   select: SelectComponent,
@@ -27,7 +25,7 @@ export const DbEntities = [
 ]
 
 
-export const ItemsFormFields: IFormField[] = [
+export const ItemFormFields: IFormField[] = [
 
   {
     dataField: 'itemId',
@@ -36,6 +34,7 @@ export const ItemsFormFields: IFormField[] = [
     fieldLabel: 'Item Id:',
     inputType: 'number',
     readOnly: true,
+    initialValue: 0,
 
   },
   {
@@ -48,6 +47,7 @@ export const ItemsFormFields: IFormField[] = [
       {validatorName: 'required', validator: Validators.required, validatorErrorMessage: 'The Item Name field is required.'},
       {validatorName: 'minlength', validator: Validators.minLength(2), validatorErrorMessage: 'The Item Name field  must be at least 2 characters long.'},
     ],
+    initialValue: '',
   },
   {
     dataField: 'itemDescription',
@@ -55,7 +55,7 @@ export const ItemsFormFields: IFormField[] = [
     controlName: 'itemDescription',
     fieldLabel: 'Item Description:',
     inputType: 'text',
-    // initialValue: '',
+    initialValue: '',
   },
   {
     dataField: 'itemModelYear',
@@ -63,6 +63,7 @@ export const ItemsFormFields: IFormField[] = [
     controlName: 'itemModelYear',
     fieldLabel: 'Model Year:',
     inputType: 'number',
+    initialValue: 2020,
     minValue: 2005,
     maxValue: 2030,
     validators: [
@@ -77,6 +78,7 @@ export const ItemsFormFields: IFormField[] = [
     controlName: 'itemCreatedTimestamp',
     fieldLabel: 'Date/Time: ',
     inputType: 'datetime-local',
+    initialValue: new Date().toISOString().slice(0, 16),
   },
   {
     dataField: 'categoryNames',
@@ -88,6 +90,7 @@ export const ItemsFormFields: IFormField[] = [
     multipleOptions: true,
     optionsSize: 6,
     promptText: 'Select at least one',
+    initialValue: [0],
   },
   {
     dataField: 'itemStatusId',
@@ -100,6 +103,7 @@ export const ItemsFormFields: IFormField[] = [
       {optionKey: 2, optionValue: 'Canceled'},
       {optionKey: 3, optionValue: 'Pending', isOptionSelected: true},
     ],
+    initialValue: 3,
   },
   {
     dataField: 'isItemEnabled',
@@ -122,7 +126,7 @@ export const ItemsFormFields: IFormField[] = [
 ]
 
 
-export const CategoriesFormFields: IFormField[] = [
+export const CategoryFormFields: IFormField[] = [
 
   {
     dataField: 'categoryId',
@@ -131,6 +135,7 @@ export const CategoriesFormFields: IFormField[] = [
     fieldLabel: 'Category Id:',
     inputType: 'number',
     readOnly: true,
+    initialValue: 0,
 
   },
   {
@@ -140,6 +145,7 @@ export const CategoriesFormFields: IFormField[] = [
     fieldLabel: 'Category Name:',
     inputType: 'text',
     validators: [],
+    initialValue: '',
   },
   {
     dataField: 'categoryDescription',
@@ -147,7 +153,7 @@ export const CategoriesFormFields: IFormField[] = [
     controlName: 'categoryDescription',
     fieldLabel: 'Category Description:',
     inputType: 'text',
-    // initialValue: '',
+    initialValue: '',
   },
   {
     controlType: 'button',

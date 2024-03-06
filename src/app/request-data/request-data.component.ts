@@ -3,8 +3,8 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angul
 import { MatInputModule } from '@angular/material/input';
 import { FormComponent } from '../dynamic-form/form/form.component';
 import { FormFieldsFacroryServiceProvider } from '../services/form-fields-facrory-service-provider';
-import { BaseFormFieldsService } from '../services/base-form-fields.service';
-import { dataSetName } from '../dataObjects/IFormField';
+import { BaseFormFieldService } from '../services/base-form-fields.service';
+import { dtTokenType } from '../dataObjects/IFormField';
 import { ActivatedRoute } from '@angular/router';
 import { DbEntities } from '../dataObjects/dbDataFormFields';
 
@@ -34,9 +34,9 @@ export class RequestDataComponent {
   
     }
 
-  private dtToken!: dataSetName; 
-  private baseService: any;  
-  private ffService!: BaseFormFieldsService;
+  private dtToken!: dtTokenType; 
+  private baseService!: FormFieldsFacroryServiceProvider;  
+  // private ffService!: BaseFormFieldsService;
 
 
   requestFormGroup!: FormGroup;
@@ -47,13 +47,14 @@ export class RequestDataComponent {
   
   ngOnInit() {
 
-    this.ffService = FormFieldsFacroryServiceProvider.getFormFieldsService();
+    // this.ffService = FormFieldsFacroryServiceProvider.getFormFieldsService();
 
     this.initializeForm();
     this.requestFormGroup.valueChanges.subscribe(val => {
       const id = this.requestFormGroup.get(this.input1ControlNane)?.value;
       if (id == undefined || id == null || id == '' || id <= 0) return;
-      this.ffService.setId(id!);
+      // this.ffService.setId(id!);
+      FormFieldsFacroryServiceProvider.getFormFieldsService().setId(id!);
     });
   }
 
@@ -63,12 +64,14 @@ export class RequestDataComponent {
     this.requestFormGroup = fbGroup;
   }
 
-  setIdNames(token: dataSetName): void {
+  setIdNames(token: dtTokenType): void {
     let entityName: string = DbEntities.filter(entity => entity.bLink === token)[0].name;   
     this.input1Label = entityName + ' Id';
     this.input1Placeholder = 'Input ' + entityName +  ' Id here';
   }
 
-
+  ngOnDestroy() {
+    FormFieldsFacroryServiceProvider.destroyService();
+  }
 
 }

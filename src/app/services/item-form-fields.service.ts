@@ -3,9 +3,9 @@ import { DataService } from './data.service';
 import { IItem } from '../dataObjects/iitem';
 import { ICategory } from '../dataObjects/icatecory';
 import { IFormField, IFormOptions } from '../dataObjects/IFormField';
-import { ItemsFormFields } from '../dataObjects/dbDataFormFields';
+import { ItemFormFields } from '../dataObjects/dbDataFormFields';
 //  import { formatDate } from '@angular/common';
-import { BaseFormFieldsService } from './base-form-fields.service';
+import { BaseFormFieldService } from './base-form-fields.service';
 
 // export function equalPrimitives<T>(a: T, b: T): boolean {
 //   return (a === null || typeof a !== 'object') && Object.is(a, b);
@@ -15,7 +15,7 @@ import { BaseFormFieldsService } from './base-form-fields.service';
   providedIn: 'any' 
 })
 
-export class ItemFormFieldsService extends BaseFormFieldsService{
+export class ItemFormFieldsService extends BaseFormFieldService{
 
   constructor() {
     super();
@@ -31,7 +31,7 @@ export class ItemFormFieldsService extends BaseFormFieldsService{
   }
 
   private itemsDataServise = inject(DataService); 
-  override formFields: IFormField[] = ItemsFormFields;
+  override formFields: IFormField[] = ItemFormFields;
 
   // public $formFields = signal< IFormField[]>(this.formFields, {equal: equalPrimitives});          // The Signal using custom equality function - equalPrimitives
   public $formFields = signal< IFormField[]>(this.formFields);                                  // The Signal with the default equality function - object.js
@@ -66,11 +66,5 @@ export class ItemFormFieldsService extends BaseFormFieldsService{
     });
     this.$formFields.set([...this.formFields]);    // Set Signal new value using spread operator
   }
-
-
-
-
-
-
 
 }

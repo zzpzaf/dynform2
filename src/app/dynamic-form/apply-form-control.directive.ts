@@ -1,5 +1,5 @@
 import { ComponentRef, Directive, ViewContainerRef, effect, input } from '@angular/core';
-import { dynComponents } from '../dataObjects/dbDataFormFields';
+import { DynComponents } from '../dataObjects/dbDataFormFields';
 import { IFormField } from '../dataObjects/IFormField';
 
 @Directive({
@@ -17,7 +17,7 @@ export class ApplyFormControlDirective {
     effect(() => {
       const controlType = this.formField().controlType;
       if (controlType) {
-        const component = dynComponents[controlType];
+        const component = DynComponents[controlType];
         this.componentRef = this.viewContainerRef.createComponent(component);
         this.componentRef.instance.field = this.formField();
         this.componentRef.instance.fGroup = this.formGroup();    

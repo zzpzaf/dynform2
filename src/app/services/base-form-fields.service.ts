@@ -1,7 +1,7 @@
 import { Signal, WritableSignal, signal } from "@angular/core";
 import { IFormField, IFormOptions } from "../dataObjects/IFormField";
 
-export abstract class BaseFormFieldsService {
+export abstract class BaseFormFieldService {
     
 
     constructor () {};
@@ -67,5 +67,9 @@ export abstract class BaseFormFieldsService {
         const dtStr = new Date(dt).toISOString();
         return dtStr;
       }
+
+      // protected {}
+
+      
 
 }

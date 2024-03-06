@@ -8,8 +8,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { RouterOutlet } from '@angular/router';
 import { IFormField, IFormFieldValidator } from '../../dataObjects/IFormField';
 import { ApplyFormControlDirective } from '../apply-form-control.directive';
-import { IItem } from '../../dataObjects/iitem';
-import { BaseFormFieldsService } from '../../services/base-form-fields.service';
+import { BaseFormFieldService } from '../../services/base-form-fields.service';
 import { FormFieldsFacroryServiceProvider } from '../../services/form-fields-facrory-service-provider';
 
 @Component({
@@ -25,7 +24,6 @@ import { FormFieldsFacroryServiceProvider } from '../../services/form-fields-fac
     MatFormFieldModule,
     ApplyFormControlDirective,
   ],
-  // providers: [FormFieldsModule],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss',
 
@@ -43,7 +41,7 @@ export class FormComponent {
     });
   }
  
-  private ffService!: BaseFormFieldsService; //=inject(FormFieldsService); 
+  private ffService!: BaseFormFieldService; //=inject(FormFieldsService); 
   public formFields!: IFormField[];
   public fornCardTitle: string = 'Dynamic Form with Dynamic Components';
   public dynFormGroup!: FormGroup;
@@ -72,7 +70,7 @@ export class FormComponent {
     this.formFields.forEach((field) => {
        fbGroup.addControl(
         field.controlName,
-        new FormControl(
+        new FormControl<typeof field.initialValue>(
           field.initialValue !== undefined && field.initialValue !== null
             ? field.initialValue
             : ''
@@ -81,7 +79,6 @@ export class FormComponent {
         )
       );
     });
-
     this.dynFormGroup = fbGroup;
   }
 
@@ -111,9 +108,14 @@ export class FormComponent {
     this.isFormSubmitted = true;
     if (this.dynFormGroup.invalid) {
       console.log('onFormSubmit() - dynFormGroup is invalid!');
+      console.log('onFormSubmit() - dynFormGroup', this.dynFormGroup);
       return;
     }
     console.log('onFormSubmit() - dynFormGroup', this.dynFormGroup);
+  }
+
+  ngOnDestroy() {
+    FormFieldsFacroryServiceProvider.destroyService();
   }
 
 }
