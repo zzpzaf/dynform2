@@ -9,7 +9,6 @@ const dbObjectRoutes: Routes = [];
 DbEntities.forEach((dbEntity) => {
     let dbRoute: Route = { path: dbEntity.bLink, component: RequestDataComponent, data: { dtToken: dbEntity.bLink } };
     dbObjectRoutes.push(dbRoute);
-    //dbObjectRoutes.push({ path: dbEntity.bLink, component: RequestDataComponent, data: { dtToken: dbEntity.bLink } });
 });
 
 export const routes: Routes = [

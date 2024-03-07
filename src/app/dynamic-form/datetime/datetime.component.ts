@@ -70,8 +70,6 @@ export class DatetimeComponent {
     } else if (this.field.inputType == 'time') {
       this.mtxType = 'time';
     } 
-    // console.log('    >=====>> mtxType: ',this.mtxType);
-
   } 
 
 }

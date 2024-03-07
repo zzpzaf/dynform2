@@ -3,7 +3,6 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angul
 import { MatInputModule } from '@angular/material/input';
 import { FormComponent } from '../dynamic-form/form/form.component';
 import { FormFieldsFacroryServiceProvider } from '../services/form-fields-facrory-service-provider';
-import { BaseFormFieldService } from '../services/base-form-fields.service';
 import { dtTokenType } from '../dataObjects/IFormField';
 import { ActivatedRoute } from '@angular/router';
 import { DbEntities } from '../dataObjects/dbDataFormFields';
@@ -35,9 +34,7 @@ export class RequestDataComponent {
     }
 
   private dtToken!: dtTokenType; 
-  private baseService!: FormFieldsFacroryServiceProvider;  
-  // private ffService!: BaseFormFieldsService;
-
+  private baseService!: FormFieldsFacroryServiceProvider; 
 
   requestFormGroup!: FormGroup;
   input1Label: string = 'Id';
@@ -53,7 +50,6 @@ export class RequestDataComponent {
     this.requestFormGroup.valueChanges.subscribe(val => {
       const id = this.requestFormGroup.get(this.input1ControlNane)?.value;
       if (id == undefined || id == null || id == '' || id <= 0) return;
-      // this.ffService.setId(id!);
       FormFieldsFacroryServiceProvider.getFormFieldsService().setId(id!);
     });
   }

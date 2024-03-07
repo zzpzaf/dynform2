@@ -4,17 +4,6 @@
         [name]="field.controlName" 
         [value]="field.initialValue"
       >
-      <!-- <mat-radio-button
-        color="primary"
-        *ngFor="let option of field.options"
-        [formControlName]="field.controlName"
-        [value]="option.optionKey"
-        ngDefaultControl
-      >
-        "{{ option.optionValue }}"
-        
-      </mat-radio-button> -->
-
       @for (option of field.options; track $index) {
         <mat-radio-button
           color="primary"
@@ -25,6 +14,5 @@
           "{{ option.optionValue }}"
         </mat-radio-button>
       }
-
     </mat-radio-group>
   </div>

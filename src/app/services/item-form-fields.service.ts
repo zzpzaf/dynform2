@@ -4,7 +4,6 @@ import { IItem } from '../dataObjects/iitem';
 import { ICategory } from '../dataObjects/icatecory';
 import { IFormField, IFormOptions } from '../dataObjects/IFormField';
 import { ItemFormFields } from '../dataObjects/dbDataFormFields';
-//  import { formatDate } from '@angular/common';
 import { BaseFormFieldService } from './base-form-fields.service';
 
 // export function equalPrimitives<T>(a: T, b: T): boolean {
@@ -32,14 +31,11 @@ export class ItemFormFieldsService extends BaseFormFieldService{
 
   private itemsDataServise = inject(DataService); 
   override formFields: IFormField[] = ItemFormFields;
-
-  // public $formFields = signal< IFormField[]>(this.formFields, {equal: equalPrimitives});          // The Signal using custom equality function - equalPrimitives
-  public $formFields = signal< IFormField[]>(this.formFields);                                  // The Signal with the default equality function - object.js
+  public $formFields = signal< IFormField[]>(this.formFields);
 
   public setId(itemId: number) {
     this.itemsDataServise.getItems().subscribe((items: IItem[]) => {
       const item: IItem = items.find((item: IItem) => item['itemId'] === itemId)!;
-      // this.$item.update(()=>item);
       if (item) this.updateFormFieldsInitialValues(item);
     });
   }
@@ -64,7 +60,7 @@ export class ItemFormFieldsService extends BaseFormFieldService{
       if (!field.options) field.initialValue = item[dataField!];
       if (field.controlType === 'datetime') field.initialValue = this.dateTimeString(item[dataField]); 
     });
-    this.$formFields.set([...this.formFields]);    // Set Signal new value using spread operator
+    this.$formFields.set([...this.formFields]);
   }
 
 }

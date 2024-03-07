@@ -1,10 +1,10 @@
 <div class="content-area1">
   <h1>The Standalone Dynamic Form Demo project</h1>
 
-  <h2>Abstarct</h2>
+  <h2>Abstract</h2>
   <p>
-    This is a distinguished <b>Angular 17</b> project for a dynamic form
-    implementation loading dynamic components at runtime via a helper directive.
+    This is a simple yet distinguished <b>Angular 17</b> (17.2) project of mine,
+    for a dynamic form implementation using dynamic components.
     <br />
     <br />
     The form fields/controls metadata are provided as an array of metadata
@@ -15,10 +15,23 @@
     values obtained as a row set from the backend.
   </p>
 
+  <p>
+    The dynamic form is a reactive one using independent standalone components
+    that are dynamically loaded at runtime via a helper directive. The dynamic
+    form is also built as a typed form, and the type of each control is obtained
+    from the type of the value of a property of a metadata object.
+  </p>
+
+  <p>
+    Furthermore, the form, as well as the candidate dynamic components are based
+    on the Material library, but this can be easily changed, by changing even,
+    just the respective templates.
+  </p>
+
   <h2>Angular 17</h2>
 
   <div class="txtboximg1">
-    <img id="i1" src="assets/images/Anguls17.gif" alt="Angular Logo" />
+    <img id="i1" src="assets/images/Anguls17b.gif" alt="Angular Logo" />
     <span>
       The project is based on <b>Angular</b> version <b>17.2</b> with Angular
       <b>Material</b>
@@ -30,7 +43,8 @@
     <li><strong>standalone</strong> components (no modules),</li>
     <li>
       <strong>signals</strong> (for non-backend async operations such as those
-      based on HttpClient), and
+      based on HttpClient), as well as for some cases that replace the
+      &commat;Input decorator, and
     </li>
     <li>
       new <strong>&commat;-based flow</strong> control syntax in component
@@ -38,490 +52,12 @@
     </li>
   </ul>
 
-  <h2>The overview diagram of the project</h2>
-  <div class="txtboximg2">
-    <img
-      id="i2"
-      src="assets/images/project1.png"
-      alt="Project overview diagram"
-    />
-  </div>
-
-  <h2>The project structure and key-components description</h2>
-
-  <pre>
-        `-- src
-            `-- app
-                |-- about
-                |-- app.component.html
-                |-- app.component.scss
-                |-- app.component.ts
-                |-- app.config.ts
-                |-- app.routes.ts
-                |-- <b>dataObjects</b>
-                |   |-- IFormField.ts
-                |   |-- dbDataFormFields.ts
-                |   |-- icatecory.ts
-                |   `-- iitem.ts
-                |-- <b>dynamic-form</b>
-                |   |-- apply-form-control.directive.ts
-                |   |-- button
-                |   |-- checkbox
-                |   |-- datetime
-                |   |-- form
-                |   |-- input
-                |   |-- radio
-                |   `-- select
-                |-- home
-                |-- request-data
-                `-- <b>services</b>
-                    |-- base-form-fields.service.ts
-                    |-- category-form-fields.service.ts
-                    |-- data.service.ts
-                    |-- form-fields-facrory-service-provider.ts
-                    `-- item-form-fields.service.ts
-    </pre
-  >
-
   <p>
-    Apart from the AppComponent that it is automatically created, the following
-    components on the top src/app folder are used:
-  </p>
-  <ul>
-    <li><strong>HomeComponent</strong></li>
-    <li><strong>RequestDataComponent</strong></li>
-    <li><strong>AboutComponent</strong></li>
-  </ul>
-
-  <p>
-    The <strong><u>HomeComponent</u></strong> offers the Header of the page, and
-    it also provides a simple 2<sup>nd</sup> toolbar with the necessary
-    navigation link buttons for our demo purposes. The respective route path
-    (defined into the app.routes.ts file) is activated providing a static data
-    token to the RequestComponent, that is responsible for triggering the
-    process of the instantiation of an appropriate domain service (see below).
-    <br />
-    The <strong><u>RequestDataComponent</u></strong> provides just an form input
-    field that allows the user to enter the id (also by using spinners). The
-    changing id values are captured asychronously by subscribing to the
-    valueChanges into the ngOnInit life-cycle hook of the component. This
-    initiates the process of instanitiation of a domain service for fetching the
-    respective data row set from the backend and fill the dynamic form control
-    fields with <u>initial</u> data.
-    <br />
-    The <strong><u>AboutComponent</u></strong> is just a page for providing info
-    about the project.
-  </p>
-
-  <p>There are also 3 project subfolders:</p>
-  <ol>
-    <li><strong>dataObjects</strong></li>
-    <li><strong>dynamic-form, and</strong></li>
-    <li><strong>services</strong></li>
-  </ol>
-
-  <p>
-    1. The <strong><u>dataObjects</u></strong> subfolder includes all the domain
-    and data-related objects. There are 2 interfaces for the 2 demo data
-    objects. For instance, they can concern 2 tables: the
-    <strong>iitem.ts</strong> and <strong>icategory.ts</strong>.
-  </p>
-  <p>
-    The <strong>IFormField.ts</strong> file includes the types and interfaces
-    necessary to construct our objects to avoid errors in the app/project
-    variables, and objects, provide increased consistency, and facilitate app
-    maintenance.
-  </p>
-  <ul>
-    <li>
-      The <strong>IFormField</strong> interface provides the necessary
-      properties that should be used for form fields/controls (they can also be
-      optional),
-    </li>
-    <li>
-      The <strong>IFormOptions</strong> interface defines the properties for the
-      optional IFormField property &lsquo;options&rsquo;, that can be used in
-      specific fields (dynamic components) of type &lsquo;select&rsquo; or a
-      &lsquo;radio&rsquo; button group.
-    </li>
-    <li>
-      The <strong>IFormFieldValidator</strong> interface provides the validation
-      properties (for standard Validators) for any field that uses validators.
-    </li>
-    <li>
-      The <strong>dynControlType</strong> defines the allowed types of controls
-      (dynamic components) and of course more can be added later on.
-    </li>
-    <li>
-      The <strong>standardInputType</strong> defines some of the most used types
-      of the native input form field.
-    </li>
-    <li>
-      And the <strong>dtTokenType</strong> defines the allowed (so-far) token
-      values for the token being used to instantiate the appropriate domain
-      service. Of course, more can be added later on.
-    </li>
-  </ul>
-
-  <p>
-    The <strong>dbDataFormFields.ts</strong> file is mainly used to host the
-    objects arrays with the necessary metadata (properties) for each form
-    field/control created dynamically by the respective candidate dynamic
-    component. So far, it contains just a couple of such arrays, the
-    <b>ItemFormFields</b> and the <b>CategoryFormFields</b> arrays
-    (IFormField[]), each one corresponding to respective row set data from the
-    data layer (database) objects. The properties defined into those arrays can
-    be changed and adapted to particular case needs. Also, more IFormField[]
-    arrays can be added to meet the needs for any additional data set. Apart
-    from those 2 arrays, the dbDataFormFields.ts file contains:
-    <br />
-    The <b>DbEntities</b> array of objects providing some basic properties for
-    the 2 data layer objects, that are used through-out whole project.
-    <br />
-    Finally, the <b>DynComponents</b> object is used to match a form
-    control-type to the respective candidate dynamic component.
-  </p>
-
-  <p>
-    2. The <strong><u>dynamic-form</u></strong> subfolder contains the following
-    candidate dynamic components:
-  </p>
-  <ul>
-    <li><strong>ButtonComponent,</strong></li>
-    <li><strong>CheckboxComponent</strong></li>
-    <li><strong>DatetimeComponent,</strong></li>
-    <li><strong>FormComponent,</strong></li>
-    <li><strong>InputComponent,</strong></li>
-    <li><strong>SelectComponent,</strong></li>
-    <li><strong>RadioComponent,</strong></li>
-  </ul>
-  <p>
-    These components correspond to the most widely used form controls. Each one
-    requires just 2 parameters to be passed in: the 1st is for the formGroup
-    that the component should belong to, and the 2nd one is the specific field
-    metadata object obtained from the form fields array. In this demo all the
-    components are basesd on the Angular Material library.
-    <br />
-    The helper directive <strong>ApplyFormControlDirective</strong>is in-charge
-    to dynamically load and instantiate the respective candidate dynamic
-    component.
-    <br />
-    The key-component, inside the dynamic-form subfolder, is the
-    <strong>FormComponent</strong>. This is our dynamic form-host component that
-    creates (renders) by using the helper directive, any number of the candidate
-    dynamic components from those provided in the subfolder.
-  </p>
-
-  <p>
-    3. The <strong><u>services</u></strong> subfolder contains the following
-    services and classes:
-  </p>
-  <ul>
-    <li><strong>BaseFormFieldsService,</strong></li>
-    <li><strong>CategoryFormFieldsService,</strong></li>
-    <li><strong>ItemFormFieldsService,</strong></li>
-    <li><strong>DataService,</strong></li>
-    <li><strong>FormFieldsFactoryServiceProvider</strong></li>
-  </ul>
-
-  <p>
-    The <b>DataService</b> is responsible to deal only with the backend, so it
-    fetches data from the “data layer”. (As we’ve said for demo purposes, we use
-    local JSON files instead of a real data base).
-  </p>
-
-  <p>
-    The rest of the files in the services subfolder, forms <u>one "family"</u>.
-    This "family" consists of:
-    <br />
-    - an abstract class: the <b>BaseFormFieldsService</b> that serves as a base
-    class for the next two "real" services,
-    <br />
-    - two “real” services: the <b>ItemFormFieldsService</b> and the
-    <b>CategoryFormFieldsService</b>, that are derived from the previous
-    abstract class
-    <br />
-    - and a factory class: the <b>FormFieldsFactoryServiceProvider</b>, that is
-    responsible for the instantiation of the proper “real” service.
-  </p>
-
-  <p>
-    The <b>BaseFormFieldsService</b> class is an <u>abstract</u> class. Using an
-    abstract class is a common OOP pattern in TypeScript and Angular for sharing
-    common functionality while still allowing for class-specific
-    implementations. It helps to reduce code duplication and increase
-    maintainability. So, the abstract class BaseFormFieldsService defines the
-    contract for its subclasses to follow. In our case, the key contracts are
-    (so far): the abstract property '$formFields' (a signal for the form fields
-    array), and the abstract “setId()” method that allows “consumers” to set the
-    requested id for fetching the respective row set from the backend. Both of
-    them should be followed/implemented by the derived services (any class that
-    extends the BaseFormFieldsService class). It also provides some protected
-    members and methods that implement common functionality for any of the
-    subclasses/services. This common functionality concerns mainly the methods
-    used to update formFields array with initial values, and especially some
-    fields of a specific type, e.g.: of type of 'select', 'radio', 'datetime'
-    etc.
-  </p>
-
-  <p>
-    The <b>ItemFormFieldsService</b> and the
-    <b>CategoryFormFieldsService</b> are the implementation subclasses that
-    extend the abstract BaseFormFieldsService class. They can be considered as
-    domain-specific services. Both of them use the appropriate data service (the
-    DataService in our case) for accessing data from the backend. A “consumer”
-    can use any of them, to ask to fetching a row set of data from the
-    appropriate data object (e.g. a table), by providing a user-requested id. A
-    “consumer” actually, calls the “setId()” method of the instantiated and
-    injected domain service, and passes it the requested id number. Each one of
-    those derived domain services is actually responsible for preparing and
-    formulating a “ready” formFields array, that can be used from our dynamic
-    form -the FormComponent. Moreover, a domain service is also responsible for
-    keeping the formFields array updated, by responding to the id passed in via
-    the setId() method, fetching the respective data row set, and setting the
-    <u><b>initial</b> values</u> for each field of the formFields array. Thus,
-    in every change of the id, all the fields of the formFields array are kept
-    updated.
-  </p>
-
-  <p>
-    The <b>FormFieldsFactoryServiceProvider</b> is responsible for instantiating
-    a “real” service that is a subclass of the BaseFormFieldsService . As we
-    have seen, there are 2 such services so far: the ItemFormFieldsService and
-    the CategoryFormFieldsService. The instantiation of one of those services is
-    based on the token value passed to the FormFieldsFactoryServiceProvider
-    constructor. This token value is provided via a “consumer” that plays the
-    role of an “initiator”.
-    <br />
-    In our case, the RequestDataComponent plays the role of an “initiator”.
-    Recall, that the real token value is obtained into the RequestDataComponent
-    as a static data object via the router. When a token value is obtained, the
-    RequestDataComponent instantiates an object of the
-    FormFieldsFactoryServiceProvider by passing into its constructor that token
-    value. This should be done inside the RequestDataComponent constructor
-    method since the return object concerns a service (one of the domain
-    services instantiated), that is actually injected into the
-    RequestDataComponent during its creation. The RequestDataComponent does not
-    know which of the domain services is instantiated, and it shouldn't. The
-    RequestDataComponent job is to instantiate (once) the appropriate domain
-    service, and then to pass the id value to the setId() method of the
-    instantiated domain service, every time the user enters/changes the id
-    value. Nothing more.
-    <br />
-    The magic job is done via the FormFieldsFactoryServiceProvider and its
-    public static method “getFormFieldsService()” that provides the “ffService”
-    object of the instantiated domain service, together with all of its
-    functionalities. However, the RequestDataComponent is interested only in
-    obtaining this instantiated object, and then, using its setId() method, to
-    trigger the process of fetching the data row set from the backend.
-  </p>
-
-  <p>
-    On the other hand, the same public static method is also used by our dynamic
-    form -the FormComponent.
-  </p>
-
-  <h2>The dynamic form: the FormComponent</h2>
-
-  <p>
-    The dynamic reactive form is implemented on the basis of a number of
-    independent dynamic components, (as rhey have been defined in the
-    DynComponents const in the dbDataFormFields.ts file). These are actually,
-    the candidate dynamic form controls:
-  </p>
-  <ul>
-    <li>button: ButtonComponent,</li>
-    <li>input: InputComponent,</li>
-    <li>select: SelectComponent,</li>
-    <li>radio: RadioComponent,</li>
-    <li>datetime: DatetimeComponent,</li>
-    <li>checkbox: CheckboxComponent,</li>
-  </ul>
-  <small>
-    Especially, for the DatetimeComponent, the
-    <a href="https://github.com/ng-matero/extensions" target="_blank"
-      >&commat;ng-matero/extensions</a
-    >
-    DateTimePicker has been used, supported by the
-    <a href="https://moment.github.io/luxon/" target="_blank">Luxon</a> library
-    (Luxon adapter). For more details you can take a look at my post,
+    Read more at my post in Medium
     <a
-      href="https://levelup.gitconnected.com/angular-material-datetimepicker-s-challenges-8e7aec4be7a2"
-      target="_blank"
-      >here</a
-    >
-    and the related repo
-    <a href="https://github.com/zzpzaf/MTxDatetimepicker1" target="_blank"
-      >here</a
-    >.
-  </small>
-
-  <p>
-    The dynamic components are dynamically instantiated as reactive form
-    controls, and rendered using the helper directive
-    (ApplyFormControlDirective) in the 'host' dynamic form component
-    (FormComponent) template. Using a helper directive for dynamic component
-    loading is a well-known practice and you can also find more in my post
-    <a
-      href="https://levelup.gitconnected.com/angular-any-component-dynamic-component-bb6814e5377d"
+      href="https://medium.com/@zzpzaf.se/a-standalone-dynamic-form-an-angular-17-implementation-f708dc02ad8d"
       target="_blank"
       >here</a
     >.
   </p>
-
-  <p>
-    The initial data are updated by a new row set fetched, each time the user
-    enters an id in the field of the simple form in the RequestDataComponent.
-    Actually, the initial values are fetched via a matching domain service
-    (based on the BaseFormFieldsService) that is instantiated via a class
-    service provider (the FormFieldsFacroryServiceProvider), for the appropriate
-    metadata array. This happens whenever the user clicks on the respective
-    button in the toolbar of the home component, that activates also the
-    respective router link. The activated link provides a token as static data,
-    that triggers the selection/instantiation of the service-in-charge.
-  </p>
-
-  <p>
-    As we've said, the metadata of the dynamic components that are created as
-    form controls inside the FormComponent, are imported as an array of form
-    fields (the formFields variable). The FormComponent knows nothing about the
-    fields of the formFields array, e.g.: from where those fields are coming
-    from, or how they have been formed. The only concern of the FormComponent is
-    to render the dynamic controls from the formFields array.
-  </p>
-
-  <p>
-    Also, we have mentioned, that those fields are initially defined via an
-    array of metadata objects (JSON objects). Actually, we have prepared 2 such
-    arrays: the ItemFormFields and the CategoryFormFields array. The
-    FormComponent upon its instantiation, deals with just 1 formFields array,
-    that is obtained from a service actually with one of our known domain
-    services that has been already instantiated.
-  </p>
-
-  <p>
-    The FormComponent also knows nothing about which domain service instance is
-    active. What the FormComponent does, is to access the public static method
-    “getFormFieldsService()” of the FormFieldsFacroryServiceProvider and obtain
-    the currently instantiated domain service (the “ffService” object). Any
-    service that subclasses the abstract BaseFormFieldsService class is
-    suitable.
-  </p>
-
-  <p>
-    The instantiated domain service is obtained into the FormComponent
-    constructor, so the instance of the service is actually injected into the
-    FormComponent. Then it senses every change of the formFields array by
-    monitoring the changes of the $formFields signal of the domain service
-    inside an effect() function. Every change of this results an update of the
-    initial values of the form controls.
-  </p>
-
-  <h2>
-    The RequestDataComponent and FormComponent relation, and the “singleton
-    exclusivity” of a shared domain service providing the dynamic fields
-    metadata
-  </h2>
-
-  <p>As you can see below, tracing the templates:</p>
-
-  <pre
-    style="
-      font-family: Consolas, Monaco, Lucida Console, Liberation Mono,
-        DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-    "
-  >
-      &lt;app-root&gt;
-      &lt;app-homet&gt;
-      &lt;outer-outlett&gt; -> &lt;request-datat&gt;
-                         &lt;dyn-formt&gt;
-  </pre>
-
-  <p>reveals the relation between the app components.</p>
-
-  <p>
-    Even if they are not tightly coupled, the dyn-form (the FormComponent) is a
-    child component of the request-data (RequestDataComponent). So, upon the
-    RequestDataComponent instantiation/creation, the FormComponent is
-    instantiated/created as well.
-    <br />
-    They do not know they share a common service: a domain service (actually a
-    subclass of the BaseFormFieldsService).
-    <br />
-    When the RequestDataComponent is instantiating it also instantiates (within
-    its constructor) a BaseFormFieldsService domain service through the
-    FormFieldsFacroryServiceProvider.
-    <br />
-    Moreover, it keeps updating the instantiated service (whenever the user
-    changes the requested id) by accessing the setId() directly via the static
-    method: FormFieldsFacroryServiceProvider.getFormFieldsService() -which
-    returns the instance of the instantiated service.
-    <br />
-    So, when the FormComponent (within its constructor), accesses the static
-    FormFieldsFacroryServiceProvider.getFormFieldsService(), it accesses the
-    same service. The instantiated service lives as long as the
-    RequestDataComponent lives and the same is true for the FormComponent.
-  </p>
-
-  <p>
-    However, there is a “pain point” here that requires some attention. The
-    instantiated service in the FormFieldsFacroryServiceProvider is not
-    destroyed automatically, because it is not managed by Angular. So, we have
-    to do it a bit “manually”. A solution to this is to use the static method
-    FormFieldsFacroryServiceProvider.destroyService() that sets the instantiated
-    service instance to null. To use it, we have to call it from the
-    ngOnDestroy() life-hook method in both the RequestDataComponent and the
-    FormComponent.
-  </p>
-
-  <p>
-    Thus, when a user presses a different button (for a different data object)
-    the RequestDataComponent is destroyed and recreated again, and it also zeros
-    out and recreates a new domain service (defined by the router's token).
-  </p>
-
-  <p>
-    The above implementation assures that an instantiated domain service will
-    have “singleton exclusivity” between the parent and child components (the
-    RequestDataComponent and the FormComponent) that “consume” it. This means
-    that our dynamic form remains reusable for different form field arrays, for
-    any other part of our application, and for any other “parent” component that
-    could be used to instantiate any of the available domain services. Moreover,
-    in the future, more domain services can be implemented and added to the
-    FormFieldsFacroryServiceProvider for instantiation (together with the
-    necessary update to other involved object, such as: the the entities and
-    objects inside the IFormField.ts file, the dbOjects route paths with the
-    respective tokens), etc., without affecting the code for our dynamic form in
-    the FormComponent.
-  </p>
-
-  <h2>Final notes</h2>
-  <p>
-    In final words, I would like just to mention some of the benefits of the
-    project implementation:
-  </p>
-  <ul>
-    <li>
-      The implementation of the dynamic form remains extensible, flexible, and
-      reusable.
-    </li>
-    <li>New dynamic components can be added.</li>
-    <li>Any dynamic component can be customized further.</li>
-    <li>
-      Different form field arrays with various metadata properties can be also
-      added, accompanied by the respective domain services, which can be easily
-      used with the FormFieldsFacroryServiceProvider and instantiated upon
-      request.
-    </li>
-  </ul>
-  <p>
-    All the above enhancements can not necessarily affect the core code of the
-    dynamic form.
-  </p>
-
-  <p>Enjoy!</p>
-
-  <p>Panos Zafeiropoulos 2024</p>
-
-  <p></p>
 </div>

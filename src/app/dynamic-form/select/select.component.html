@@ -9,9 +9,6 @@
             [multiple]="field.multipleOptions"
             >
             <mat-option [value]="null" disabled>{{ field["promptText"] }}</mat-option>
-            <!-- <mat-option *ngFor="let opt of field.options" [value]="opt.optionKey">
-                {{ opt.optionValue }}
-            </mat-option> -->
             @for (opt of field.options; track $index) {
                 <mat-option [value]="opt.optionKey">
                     {{ opt.optionValue }}
